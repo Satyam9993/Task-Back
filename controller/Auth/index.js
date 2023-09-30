@@ -19,10 +19,6 @@ exports.Login = async (req, res) => {
             return res.status(422).send({ error: error.details[0].message })
         }
 
-        const options = {
-            expiresIn: '1h'  // token will expire in 1 hour
-        };
-
         await User.findOne({ email: value.email }).then(async (user) => {
             await bcrypt.compare(value.password, user.password).then((bc) => {
                 if (bc) {
@@ -31,7 +27,7 @@ exports.Login = async (req, res) => {
                             id: user.id,
                         },
                     };
-                    const authToken = jwt.sign(payload, JWTSECRET, options);
+                    const authToken = jwt.sign(payload, JWTSECRET);
                     res.status(200).send({
                         success: "true",
                         token: authToken,
