@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+// Testing Route
 app.get("/", (req, res)=>{
   res.send({"Success":"true"});
 })
